@@ -81,8 +81,8 @@
 
 /* index intro */
 
-#intro {
-    padding: 20px 0;
+#intro, .intro {
+    padding: 20px 30px; /* Increase padding as needed */
 }
 
     #video {

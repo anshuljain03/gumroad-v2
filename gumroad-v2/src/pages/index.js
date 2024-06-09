@@ -1,19 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
+import { useRouter } from 'next/router';
+import useAuth from '../hooks/useAuth';
+
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 
 const HomePage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showError, setShowError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('An error occurred. Please try again.');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const { isLoggedIn } = useAuth();  // Adjusted to destructure isLoggedIn directly
+    const router = useRouter();
 
-    const handleSubmit = (event) => {
+    useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/home');  // Redirect to home/dashboard if already logged in
+        }
+    }, [isLoggedIn, router]);
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Here you would typically handle the form submission.
-        console.log('Email:', email, 'Password:', password);
-        // Dummy error handling
-        setShowError(true);
+        setIsLoading(true);
+        setError('');
+
+        // Attempt to register the user
+        try {
+            const registerResponse = await fetch(`${BACKEND_URL}/api/users/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const registerData = await registerResponse.json();
+            if (!registerResponse.ok) {
+                throw new Error(registerData.message || 'Failed to register.');
+            }
+
+            // If registration is successful, attempt to login
+            const loginResponse = await fetch(`${BACKEND_URL}/api/users/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const loginData = await loginResponse.json();
+            if (!loginResponse.ok) {
+                throw new Error(loginData.message || 'Failed to login.');
+            }
+
+            // Save the token and redirect if login is successful
+            localStorage.setItem('token', loginData.token);
+            router.push('/home');
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
+
+    if (isLoggedIn) return null;  // Ensure we don't render the form when logged in
 
     return (
         <Layout title="Home - Gumroad">
@@ -34,26 +80,15 @@ const HomePage = () => {
                     <p id="description">Selling stuff has always been a pain. No longer! Get back to creating. <br />We make selling stuff as easy as sharing a link.</p>
                 </div>
                 <form id="large-form" onSubmit={handleSubmit}>
-                    {showError ? (
-                        <h3>Sign up for Gumroad <small className="error">{errorMessage}</small></h3>
+                    {error && <p className="error">{error}</p>}
+                    {isLoading ? (
+                        <h3>Processing...</h3>
                     ) : (
                         <h3>Sign up for Gumroad <small>Fill in the simple form below and start selling in minutes</small></h3>
                     )}
                     <p>
-                        <input
-                            type="text"
-                            placeholder="Email Address"
-                            name="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            name="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <input type="text" placeholder="Email Address" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <input type="password" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         <button type="submit">Start selling!</button>
                     </p>
                     <div className="rainbow bar"></div>

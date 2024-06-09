@@ -1,0 +1,88 @@
+import React, { useState, useEffect } from 'react';
+import Layout from '../components/Layout';
+import Link from 'next/link';
+
+const HomePage = () => {
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [history, setHistory] = useState({
+        lastSevenDays: 0,
+        lastMonth: 0,
+        total: 0
+    });
+    const [chartData, setChartData] = useState({
+        numbers: [],
+        max: 0,
+        showChart: false
+    });
+
+    useEffect(() => {
+        // Example API call to fetch data
+        const fetchData = async () => {
+            try {
+                // Replace with actual API endpoint
+                const res = await fetch('/api/purchase-history');
+                const contentType = res.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Received invalid response from server.');
+                }
+
+                const data = await res.json();
+
+                setHistory({
+                    lastSevenDays: data.lastSevenDays,
+                    lastMonth: data.lastMonth,
+                    total: data.total
+                });
+
+                if (data.chartNumbers.length > 0) {
+                    setChartData({
+                        numbers: data.chartNumbers,
+                        max: Math.ceil(Math.max(...data.chartNumbers) * 1.2),
+                        showChart: true
+                    });
+                }
+            } catch (error) {
+                setShowError(true);
+                setErrorMessage(error.message);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+        <Layout title="Home - Gumroad">
+            <div id="dashboard">
+                {showError ? (
+                    <h3 className="error">{errorMessage}</h3>
+                ) : (
+                    <h3>Last {chartData.numbers.length} days</h3>
+                )}
+                
+                <div className="chart">
+                    {chartData.showChart ? (
+                        <img src={`http://chart.apis.google.com/chart?chxr=0,0,${chartData.max}&chf=bg,s,ffffff&chxt=y&chbh=a&chs=640x225&chco=CC333F,EB6841&cht=bvg&chds=0,${chartData.max}&chd=t:${chartData.numbers.join(',')}`} width="640" height="225" alt="Sales Chart" />
+                    ) : (
+                        <p>Wait a few days and a chart will show up here!</p>
+                    )}
+                </div>
+                
+                <div className="mini-rule"></div>
+
+                <div id="history">
+                    <h4>History:</h4>
+                    <p><strong>${history.lastSevenDays.toFixed(2)}</strong> in the past 7 days.</p>
+                    <p><strong>${history.lastMonth.toFixed(2)}</strong> in the past month.</p>
+                    <p><strong>${history.total.toFixed(2)}</strong> in total.</p>
+                </div>
+
+                <div className="rainbow bar" id="loading-bar"></div>
+            </div>
+
+            <p id="below-form-p">&nbsp;</p>
+        </Layout>
+    );
+};
+
+export default HomePage;
