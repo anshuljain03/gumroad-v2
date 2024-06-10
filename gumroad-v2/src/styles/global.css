@@ -9,7 +9,6 @@ body {
     color: #797874;
     text-shadow: 0 1px 0 rgba(255, 255, 255, .4);
     font-size: 13px; line-height: 21px;
-
     height: 100%;
 }
 
@@ -180,6 +179,7 @@ h1#logo {
 #push { height: 100px; }
 
 #footer {
+    clear: both;
     margin-top: 40px;
     padding: 40px 0 0;
     height: 60px;
@@ -205,5 +205,78 @@ h1#logo {
 
 
 
+    .link-form {
+        max-width: 600px;
+        margin: 180px auto;
+        padding: 20px 0 20px 20px;
+        background: #fff;
+        border: 1px solid #d4d4d4;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .link-form h3 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .link-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #666;
+    }
+    
+    .link-form input[type="text"],
+    .link-form input[type="email"],
+    .link-form textarea {
+        width: 90%;
+        padding: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .link-form textarea {
+        height: 100px;
+        resize: vertical;
+    }
 
-
+    input[type="text"], input[type="url"] {
+        height: 25px;
+    }
+    
+    
+    .link-form button {
+        padding: 10px 20px;
+        background-color: #5cb85c;
+        border: none;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .link-form button:hover {
+        background-color: #4cae4c;
+    }
+    
+    /* Styles for the dropzone areas */
+    .dropzone {
+        padding: 10px;
+        border: 2px dashed #0087f7;
+        border-radius: 5px;
+        background: #f9f9f9;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .dropzone:focus {
+        outline: none;
+    }
+    
+    .dropzone p {
+        margin: 10px 0 0;
+        color: #666;
+    }

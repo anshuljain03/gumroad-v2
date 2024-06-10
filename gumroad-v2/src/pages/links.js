@@ -13,7 +13,7 @@ const LinksPage = () => {
         const fetchLinks = async () => {
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:5000/api/links', {
+                const response = await fetch('http://localhost:5000/api/links/', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -34,8 +34,8 @@ const LinksPage = () => {
     }, []);
 
     return (
-        <Layout>
-            <div id="dashboard" className="links-page">
+        <Layout onLinksPage={true}>
+            <div id="dashboard" className="">
                 <h3>{links.length} link{links.length === 1 ? '' : 's'}</h3>
                 <Link href="/add"><button className="button" id="add-link-button">Add link</button></Link>
                 {links.length > 0 && (

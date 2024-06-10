@@ -82,7 +82,7 @@
 /* index intro */
 
 #intro, .intro {
-    padding: 20px 30px; /* Increase padding as needed */
+    padding: 20px 0px; /* Increase padding as needed */
 }
 
     #video {
@@ -120,9 +120,11 @@
     #intro li {
         padding: 0 20px 16px 40px;
         font-size: 13px;
-    } #intro li p { font-size: 12px; line-height: 18px; color: #a4a39e; }
+    } 
     
-        #intro li h5 { font-weight: bold; }
+    #intro li p { font-size: 12px; line-height: 18px; color: #a4a39e; }
+    
+    #intro li h5 { font-weight: bold; }
     
         #we-handle-payments {
             background: url(../images/cc_icon.png) no-repeat 0 5px;
@@ -243,7 +245,7 @@
     
 /* login */
 
-#login #large-form {
+#login-form #large-form {
     margin-top: 50px;
 }
 
@@ -257,7 +259,7 @@
 /* static content */
 
 #main-content {
-    padding: 30px 0;
+    padding: 150px 12%;
     width: 62%;
 }
 

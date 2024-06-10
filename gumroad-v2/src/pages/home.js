@@ -17,14 +17,12 @@ const HomePage = () => {
     });
 
     useEffect(() => {
-        // Example API call to fetch data
         const fetchData = async () => {
             try {
-                // Replace with actual API endpoint
                 const res = await fetch('/api/purchase-history');
                 const contentType = res.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
-                    throw new Error('Received invalid response from server.');
+                    throw new Error('Could not find purchase history.');
                 }
 
                 const data = await res.json();
@@ -52,7 +50,7 @@ const HomePage = () => {
     }, []);
 
     return (
-        <Layout title="Home - Gumroad">
+        <Layout title="Gumroad">
             <div id="dashboard">
                 {showError ? (
                     <h3 className="error">{errorMessage}</h3>

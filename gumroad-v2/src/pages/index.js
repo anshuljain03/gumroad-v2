@@ -62,7 +62,7 @@ const HomePage = () => {
     if (isLoggedIn) return null;  // Ensure we don't render the form when logged in
 
     return (
-        <Layout title="Home - Gumroad">
+        <Layout title="Gumroad - Selling should be as easy as sharing a link." useFeedbackHeader={false}>
             <div id="intro">
                 <div id="video"></div>
                 <ul>

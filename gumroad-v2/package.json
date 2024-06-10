@@ -24,6 +24,7 @@
     "react-bootstrap": "^2.10.2",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
+    "react-dropzone": "^14.2.3",
     "react-tooltip": "^5.26.4"
   },
   "devDependencies": {

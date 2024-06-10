@@ -3,12 +3,15 @@ import MyHead from './MyHead';
 import Header from './Header';
 import Footer from './Footer';
 
-const Layout = ({ children, title }) => {
+const Layout = ({ children, title, onLinksPage = false, useFeedbackHeader=true}) => {
     return (
         <>
-            <MyHead title={title} />
-            <Header />
-            {children}
+                <div className="top-bar"></div>
+                <div id="wrapper">
+                    <MyHead title={title} />
+                    <Header onLinksPage={onLinksPage} useFeedbackHeader={useFeedbackHeader}/>
+                    {children}
+            </div>
             <Footer />
         </>
     );

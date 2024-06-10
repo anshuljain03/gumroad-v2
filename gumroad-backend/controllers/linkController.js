@@ -1,8 +1,9 @@
 const Link = require('../models/Link');
+const Permalink = require('../models/Permalink');
 
 exports.getLinks = async (req, res) => {
   try {
-    const links = await Link.find({ owner: req.user.id });
+    const links = await Link.find({ owner: req.user.email });
     res.json(links);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -24,17 +25,19 @@ exports.getLink = async (req, res) => {
 };
 
 exports.createLink = async (req, res) => {
-  const { name, url, description, price } = req.body;
-
+  const { name, url, previewUrl, description, price } = req.body;
+  const permalink = new Permalink({permalink: Math.random().toString(36).substring(2, 8)});
+  permalink.save();
   try {
     const link = new Link({
-      owner: req.user.id,
+      owner: req.user.email,
       name,
       url,
+      previewUrl,
+      permalink,
       description,
       price
     });
-
     await link.save();
     res.status(201).json(link);
   } catch (err) {
