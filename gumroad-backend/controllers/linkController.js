@@ -4,6 +4,7 @@ const Permalink = require('../models/Permalink');
 exports.getLinks = async (req, res) => {
   try {
     const links = await Link.find({ owner: req.user.email });
+    console.log('links', links);
     res.json(links);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -11,14 +12,15 @@ exports.getLinks = async (req, res) => {
 };
 
 exports.getLink = async (req, res) => {
+  console.log(req.params.id);
   try {
-    const link = await Link.findById(req.params.id);
+    const link = await Link.find({permalink: req.params.id});
 
     if (!link) {
       return res.status(404).json({ message: 'Link not found' });
     }
 
-    res.json(link);
+    res.json(link[0]);
   } catch (err) {
   res.status(500).json({ message: err.message });
   }
@@ -27,17 +29,19 @@ exports.getLink = async (req, res) => {
 exports.createLink = async (req, res) => {
   const { name, url, previewUrl, description, price } = req.body;
   const permalink = new Permalink({permalink: Math.random().toString(36).substring(2, 8)});
-  permalink.save();
+
   try {
+    const savedPermalink = await permalink.save();
     const link = new Link({
       owner: req.user.email,
       name,
       url,
       previewUrl,
-      permalink,
+      permalink: savedPermalink.permalink,
       description,
       price
     });
+
     await link.save();
     res.status(201).json(link);
   } catch (err) {
@@ -47,13 +51,13 @@ exports.createLink = async (req, res) => {
 
 exports.updateLink = async (req, res) => {
   try {
-    const link = await Link.findById(req.params.id);
+    const link = await Link.find({permalink:req.params.id});
 
     if (!link) {
       return res.status(404).json({ message: 'Link not found' });
     }
 
-    const updatedLink = await Link.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedLink = await Link.findOneAndUpdate({ permalink: req.params.id }, req.body, { new: true });
 
     res.json(updatedLink);
   } catch (err) {

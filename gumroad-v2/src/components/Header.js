@@ -12,7 +12,7 @@ const Header = ({ onLinksPage, useFeedbackHeader }) => {
                     <h1 id="logo">Gumroad</h1>
                 </Link>
 
-                {isLoggedIn ? (
+                {isLoggedIn && !useFeedbackHeader ? (
                     <p id="account-navigation">
                         {onLinksPage ? (
                             <Link href="/home" passHref><span>Home</span></Link>

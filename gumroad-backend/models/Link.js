@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const linkSchema = new mongoose.Schema({
   owner: { type: String, ref: 'User', required: true },
   name: { type: String, required: true },
-  permalink: { type: String, ref: 'Permalink', required: true },
+  permalink: { type: String, required: true },
   url: { type: String, required: true },
   previewUrl: String,
   description: String,

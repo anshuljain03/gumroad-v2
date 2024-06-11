@@ -14,11 +14,9 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
     const router = useRouter();
 
     const handleSubmit = async (event) => {
-        console.log(event);
         event.preventDefault();
         const method = edit ? 'PUT' : 'POST';
         const url = `http://localhost:5000/api/links${edit ? `/${initialLinkData.id}` : '/'}`;
-        console.log('Submitting form:', linkData, method, url)
         try {
             const response = await fetch(url, {
                 method,

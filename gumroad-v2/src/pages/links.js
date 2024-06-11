@@ -22,6 +22,9 @@ const LinksPage = () => {
                     throw new Error('Failed to fetch links');
                 }
                 const data = await response.json();
+
+                console.log('in gere', data);
+
                 setLinks(data);
             } catch (error) {
                 setError(error.message);
@@ -34,7 +37,7 @@ const LinksPage = () => {
     }, []);
 
     return (
-        <Layout onLinksPage={true}>
+        <Layout onLinksPage={true} useFeedbackHeader={false}>
             <div id="dashboard" className="">
                 <h3>{links.length} link{links.length === 1 ? '' : 's'}</h3>
                 <Link href="/add"><button className="button" id="add-link-button">Add link</button></Link>
@@ -43,9 +46,9 @@ const LinksPage = () => {
                         <div className="mini-rule"></div>
                         <ul id="links">
                             {links.map(link => (
-                                <li key={link.uniquePermalink}>
-                                    <Link href={`/edit/${link.uniquePermalink}`}>
-                                        {link.name} - ${link.formatted_price}
+                                <li key={link.permalink}>
+                                    <Link href={`/edit/${link.permalink}`}>
+                                        {link.name} - ${link.price}
                                     </Link>
                                 </li>
                             ))}

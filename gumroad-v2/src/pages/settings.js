@@ -28,7 +28,7 @@ const SettingsPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         // Here you would handle the form submission to your backend
-        console.log('Form data submitted:', formData);
+        console.info('Form data submitted:', formData);
         // Optionally update the local storage if needed
         localStorage.setItem('users', JSON.stringify(formData));
     };

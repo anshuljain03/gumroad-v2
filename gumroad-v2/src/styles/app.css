@@ -1,9 +1,9 @@
 /* app header */
 
-.header p.account-navigation { color: #ccc; }
-.account-navigation span, .account-navigation a { margin: 0 10px; }
-.account-navigation .balance { color: #6c6b65; }
-.account-navigation a:last-child { margin-right: 0; }
+#header p.account-navigation { color: #ccc; }
+#account-navigation span, .account-navigation a { margin: 0 10px; }
+#account-navigation .balance { color: #6c6b65; }
+#account-navigation a:last-child { margin-right: 0; }
     
 /* app main */
 
@@ -52,8 +52,8 @@
     color: #454545;
     margin-top: 12px;
 } 
-.links li a { color: #252a2d; font-size: 18px; line-height: 27px; }
-.links li small { color: #80878d; font-size: 16px; margin-left: 10px; }
+#links li a { color: #252a2d; font-size: 18px; line-height: 27px; }
+#links li small { color: #80878d; font-size: 16px; margin-left: 10px; }
 
 /* editing link */
 

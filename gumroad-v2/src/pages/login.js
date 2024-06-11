@@ -26,8 +26,6 @@ const LoginPage = () => {
                 body: JSON.stringify({ email, password }),
             });
 
-            console.log(loginResponse);
-
             const loginData = await loginResponse.json();
             if (!loginResponse.ok) {
                 throw new Error(loginData.message || 'Failed to login.');
@@ -38,7 +36,7 @@ const LoginPage = () => {
             localStorage.setItem('user', JSON.stringify(loginData));
             router.push('/home'); // Redirect to home
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setError(error.message);
         } finally {
             setIsLoading(false);

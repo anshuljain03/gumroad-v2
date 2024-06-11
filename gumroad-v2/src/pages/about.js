@@ -3,7 +3,7 @@ import Layout from '../components/Layout';  // Adjust the path as per your proje
 
 const About = () => {
     return (
-        <Layout>
+        <Layout useFeedbackHeader={true}>
             <Head>
                 <title>About Gumroad</title>
             </Head>

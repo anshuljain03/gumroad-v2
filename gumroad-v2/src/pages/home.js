@@ -50,7 +50,7 @@ const HomePage = () => {
     }, []);
 
     return (
-        <Layout title="Gumroad">
+        <Layout title="Gumroad" useFeedbackHeader={false}>
             <div id="dashboard">
                 {showError ? (
                     <h3 className="error">{errorMessage}</h3>
