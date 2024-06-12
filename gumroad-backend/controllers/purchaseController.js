@@ -114,21 +114,32 @@ exports.listPurchases = async (req, res) => {
   }
 }
 
-// api to list of purchases per day for the last 30 days
 exports.getPurchaseHistory = async (req, res) => {
   const userId = req.user._id;
   const currentDate = new Date(); // Current date
-  const thirtyDaysAgo = new Date(currentDate.getTime() - 30 * 24 * 60 * 60 * 1000); // Date 30 days ago
+  const thirtyDaysAgo = new Date(currentDate.getTime() - 29 * 24 * 60 * 60 * 1000); // Date 30 days ago
 
   try {
     const purchases = await Purchase.aggregate([
       { $match: { owner: userId, createDate: { $gte: thirtyDaysAgo } } },
-      { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$createDate" } }, total: { $sum: "$price" } } }
+      { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$createDate" } }, count: { $sum: 1 } } },
+      { $sort: { '_id': 1 } } // Sorting by date in ascending order
     ]);
 
-    return res.json(purchases);
+    // Map the results to include each day, even if no purchases were made
+    const dateArray = [];
+    for (let i = 0; i < 30; i++) {
+      const date = new Date(thirtyDaysAgo);
+      date.setDate(date.getDate() + i);
+      const dateString = date.toISOString().split('T')[0];
+      const purchaseData = purchases.find(p => p._id === dateString);
+      dateArray.push({ date: dateString, count: purchaseData ? purchaseData.count : 0 });
+    }
+
+    return res.json(dateArray);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};
+
 

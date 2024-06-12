@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
+import PieChart from '../../components/PieChart';
 import { useRouter } from 'next/router';
+
 
 const EditLinkPage = () => {
     const router = useRouter();
@@ -43,10 +45,10 @@ const EditLinkPage = () => {
                         previewUrl: data.previewUrl,
                         description: data.description,
                         downloadLimit: data.downloadLimit,
-                        views: data.views || 0,
-                        downloads: data.downloads || 0,
-                        conversion: data.conversion || 0,
-                        profit: data.profit || 0.00
+                        views: data.numberOfViews || 0,
+                        downloads: data.numberOfPaidDownloads || 0,
+                        conversion: (data.numberOfPaidDownloads/data.numberOfViews)*100 || 0,
+                        profit: data.balance || 0.00
                     });
                     setLinkToShare(`http://localhost:3000/links/${permalink}`); // Assuming you want to show a clickable link
                 } else {
@@ -136,13 +138,14 @@ const EditLinkPage = () => {
                 </p>
                 <button onClick={() => handleShare('twitter')} id="twitter-button">Share on X</button>
                 <div id="analytics-box">
-                    <p><strong>{linkData.views}</strong> views <span className="arrow">→</span> 
-                        <img src={`https://chart.googleapis.com/chart?chf=bg,s,00000000&cht=p&chd=t:${linkData.conversion},${100 - linkData.conversion}&chds=0,100&chs=100x100&chco=797874,79787420`} height="20" width="20" /> 
+                        <div id='conversion-chart'>
+                        <p><strong>{linkData.views}</strong> views <span className="arrow">→</span></p>
+                        <PieChart conversionRate={linkData.conversion} />
                         <span>{linkData.conversion}%</span> <span className="arrow">→</span> 
                         <strong>{linkData.downloads}</strong> downloads at &#8776; 
                         <strong>${linkData.price}</strong> <span className="arrow">→</span> 
                         <strong>${linkData.profit}</strong> in profit!
-                    </p>
+                        </div>
                 </div>
             </div>
             <div id="edit-link-page">

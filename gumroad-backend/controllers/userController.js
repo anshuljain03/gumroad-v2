@@ -85,6 +85,39 @@ exports.forgotPassword = async (req, res) => {
     }
 };
 
+
+exports.updateUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const updatedUser = await User.findOneAndUpdate({ _id: req.user._id }, req.body, { new: true });
+
+        res.json(updatedUser);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+
+exports.getUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json(user);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+
+
 exports.resetPassword = async (req, res) => {
     const resetToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex');
     const user = await User.findOne({

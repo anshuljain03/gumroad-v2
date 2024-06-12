@@ -25,25 +25,50 @@ const LinkPage = () => {
     }));
 
     useEffect(() => {
-        if (permalink) {
+        if (!permalink) return;
+
+        const fetchLinkDetails = async () => {
             setLoading(true);
-            fetch(`http://localhost:5000/api/links/${permalink}`, {
-                headers: { 
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.name) {
-                        setLinkDetails(data);
-                    } else {
-                        throw new Error('Failed to fetch link details');
+            try {
+                const res = await fetch(`http://localhost:5000/api/links/${permalink}`, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
-                })
-                .catch(error => setError(error.message))
-                .finally(() => setLoading(false));
-        }
+                });
+
+                const data = await res.json();
+
+                console.log(data)
+
+                if (res.ok) {
+                    setLinkDetails(data);
+                } else {
+                    throw new Error(data.message || 'Failed to fetch link details');
+                }
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const incrementViews = async () => {
+            try {
+                await fetch(`http://localhost:5000/api/links/${permalink}/views`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+            } catch (error) {
+                console.error('Failed to increment views:', error);
+            }
+        };
+
+        fetchLinkDetails();
+        incrementViews();
     }, [permalink]);
 
     const handlePayment = async (event) => {
@@ -55,7 +80,7 @@ const LinkPage = () => {
         try {
             const res = await fetch(`http://localhost:5000/api/purchases/${permalink}`, {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 },
@@ -79,26 +104,34 @@ const LinkPage = () => {
     };
 
     return (
-        <Layout>
-                <h1>{linkDetails.name}</h1>
+        <Layout linkDetails={linkDetails}>
+            <div id='description-box'>
                 <p>{linkDetails.description}</p>
-                <div id="large-form">
+            </div>
+            <div id="large-form">
                 <form onSubmit={handlePayment}>
-                    <h3>Pay ${linkDetails.price}</h3>
-                    {linkDetails.previewUrl && <a href={linkDetails.previewUrl} target="_blank">Preview</a>}
-                    <input type="text" name="card_number" placeholder="Card number" required />
-                    <select name="date_month" required>
-                        {months.map(month => (
-                            <option key={month.value} value={month.value}>{month.name}</option>
-                        ))}
-                    </select>
-                    <select name="date_year" required>
-                        {years.map(year => (
-                            <option key={year} value={year}>{year}</option>
-                        ))}
-                    </select>
-                    <input type="text" name="card_security_code" placeholder="Security code" required />
-                    <button type="submit">Pay</button>
+                    <div id='link'>
+                        {linkDetails.previewUrl && <a href={linkDetails.previewUrl} target="_blank" id='preview_link'>Preview</a>}
+                        <h3>Pay ${linkDetails.price}</h3>
+                        <p><label >Card Number:</label> <input id='card_number' type="text" name="card_number" placeholder="Card number" required /></p>
+                        <p id='expiry_p'>Expiration date: <select name="date_month" required>
+                            {months.map(month => (
+                                <option key={month.value} value={month.value}>{month.name}</option>
+                            ))}
+                        </select>
+                        <select name="date_year" required>
+                            {years.map(year => (
+                                <option key={year} value={year}>{year}</option>
+                            ))}
+                        </select> </p>
+                        <p>
+                            <label >Card Security Code:</label>
+                            <input id='card_security_code' type="text" name="card_security_code" placeholder="Security code" required />
+                        </p>
+                        <p className="last-p"><button type="submit" id="submit_button">Pay</button></p>
+                        <div className="rainbow bar"></div>
+                    </div>
+
                 </form>
                 {error && <p className="error">{error}</p>}
                 {loading && <p>Loading...</p>}

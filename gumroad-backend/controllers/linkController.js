@@ -76,3 +76,22 @@ exports.deleteLink = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// add a api to increment views for a link whenever the api is called 
+
+exports.incrementViews = async (req, res) => {
+  try {
+    const link = await Link.findOne({ permalink: req.params.id });
+
+    if (!link) {
+      return res.status(404).json({ message: 'Link not found' });
+    }
+
+    link.numberOfViews += 1;
+    await link.save();
+
+    res.json({ message: 'View incremented' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

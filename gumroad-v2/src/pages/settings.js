@@ -8,17 +8,31 @@ const SettingsPage = () => {
         paymentAddress: ''
     });
 
-    // Fetch user details from local storage when the component mounts
     useEffect(() => {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-            const userDetails = JSON.parse(userData);
-            setFormData({
-                name: userDetails.name || '',
-                email: userDetails.email || '',
-                paymentAddress: userDetails.paymentAddress || ''
-            });
-        }
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/users/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const userData = await response.json();
+                setFormData({
+                    name: userData.name || '',
+                    email: userData.email || '',
+                    paymentAddress: userData.paymentAddress || ''
+                });
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchUserData();
     }, []);
 
     const handleChange = (e) => {
@@ -27,10 +41,18 @@ const SettingsPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // Here you would handle the form submission to your backend
-        console.info('Form data submitted:', formData);
-        // Optionally update the local storage if needed
-        localStorage.setItem('users', JSON.stringify(formData));
+
+        // make api call to update user details
+        const response = await fetch('http://localhost:5000/api/users/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(formData)
+        });
+
+        localStorage.setItem('users', JSON.stringify(response));
     };
 
     return (
