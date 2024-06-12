@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const asyncHandler = require('express-async-handler');
 const sendEmail = require('../utils/sendEmail');
@@ -9,8 +10,9 @@ exports.registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
     const userExists = await User.findOne({ email });
     if (userExists) {
-        res.status(400);
-        throw new Error('User already exists');
+        res.status(400).json({
+            message: 'User already exists'
+        });
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -62,8 +64,8 @@ exports.forgotPassword = async (req, res) => {
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    // Create reset URL
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/users/reset-password/${resetToken}`;
+    // Create reset URL to be sent to the user
+    const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
 
     const message = `You recently requested to reset your password. Please go to the following link to reset your password: \n\n ${resetUrl}`;
 
@@ -72,19 +74,19 @@ exports.forgotPassword = async (req, res) => {
             email: user.email,
             subject: 'Gumroad Password Reset',
             message,
-            html: `<p>${message}</p>`
+            html: `<p>${message}</p>` // Here you can format your email with HTML if desired
         });
 
         res.status(200).json({ success: true, message: 'Email sent' });
     } catch (error) {
+        // Reset modifications if sending email fails
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
         await user.save({ validateBeforeSave: false });
 
-        res.status(500).json({ message: 'Email could not be sent' });
+        res.status(500).json({ message: 'Email could not be sent', error: error.message });
     }
 };
-
 
 exports.updateUser = async (req, res) => {
     try {
@@ -119,6 +121,7 @@ exports.getUser = async (req, res) => {
 
 
 exports.resetPassword = async (req, res) => {
+    console.log(req.params.resetToken);
     const resetToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex');
     const user = await User.findOne({
         resetPasswordToken: resetToken,
@@ -134,9 +137,9 @@ exports.resetPassword = async (req, res) => {
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
-
-    // Log the user in
-    const token = user.getSignedJwtToken();
+    
+    const token = generateToken(user._id);
+    
     res.status(200).json({ success: true, token });
 };
 

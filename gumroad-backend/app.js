@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const linkRoutes = require('./routes/linkRoutes');
 const purchaseRoutes = require('./routes/purchaseRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const fileRoutes = require('./routes/fileRoutes');
 
 const app = express();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/links', linkRoutes);
 app.use('/api/purchases', purchaseRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/file', fileRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
