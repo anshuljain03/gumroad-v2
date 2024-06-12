@@ -207,7 +207,8 @@ h1#logo {
 
     .link-form {
         max-width: 600px;
-        margin: 180px auto;
+        margin: 20px auto;
+        margin-bottom: 280px;
         padding: 20px 0 20px 20px;
         background: #fff;
         border: 1px solid #d4d4d4;
@@ -250,7 +251,7 @@ h1#logo {
     
     .link-form button {
         padding: 10px 20px;
-        background-color: #5cb85c;
+        background-color: #2d90b4;
         border: none;
         border-radius: 4px;
         color: white;
@@ -259,7 +260,7 @@ h1#logo {
     }
     
     .link-form button:hover {
-        background-color: #4cae4c;
+        background-color: #0a5978;
     }
     
     /* Styles for the dropzone areas */

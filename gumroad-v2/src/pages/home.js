@@ -19,14 +19,20 @@ const HomePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch('/api/purchase-history');
+                const res = await fetch('http://localhost:5000/api/purchases/stats', 
+                    { 
+                        headers: { 
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
                 const contentType = res.headers.get('content-type');
                 if (!contentType || !contentType.includes('application/json')) {
                     throw new Error('Could not find purchase history.');
                 }
 
                 const data = await res.json();
-
                 setHistory({
                     lastSevenDays: data.lastSevenDays,
                     lastMonth: data.lastMonth,
@@ -70,9 +76,9 @@ const HomePage = () => {
 
                 <div id="history">
                     <h4>History:</h4>
-                    <p><strong>${history.lastSevenDays.toFixed(2)}</strong> in the past 7 days.</p>
-                    <p><strong>${history.lastMonth.toFixed(2)}</strong> in the past month.</p>
-                    <p><strong>${history.total.toFixed(2)}</strong> in total.</p>
+                    <p><strong>${history.lastSevenDays}</strong> in the past 7 days.</p>
+                    <p><strong>${history.lastMonth}</strong> in the past month.</p>
+                    <p><strong>${history.total}</strong> in total.</p>
                 </div>
 
                 <div className="rainbow bar" id="loading-bar"></div>

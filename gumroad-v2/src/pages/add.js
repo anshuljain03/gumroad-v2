@@ -34,9 +34,9 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
     };
 
     return (
-        <Layout>
+        <Layout useFeedbackHeader={false}>
             <form onSubmit={handleSubmit} className="link-form">
-                <h3>{edit ? 'Edit' : 'Create'} Link</h3>
+                <h3>{'Create'} Link</h3>
                 <label htmlFor="name">Name:</label>
                 <input
                     id="name"
@@ -89,7 +89,7 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
                     onChange={e => setLinkData({...linkData, description: e.target.value})}
                 />
 
-                <button type="submit">{edit ? 'Save Changes' : 'Add Link'}</button>
+                <button type="submit">{'Add Link'}</button>
             </form>
         </Layout>
     );

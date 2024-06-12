@@ -4,7 +4,6 @@ const Permalink = require('../models/Permalink');
 exports.getLinks = async (req, res) => {
   try {
     const links = await Link.find({ owner: req.user.email });
-    console.log('links', links);
     res.json(links);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -12,7 +11,6 @@ exports.getLinks = async (req, res) => {
 };
 
 exports.getLink = async (req, res) => {
-  console.log(req.params.id);
   try {
     const link = await Link.find({permalink: req.params.id});
 
@@ -67,15 +65,14 @@ exports.updateLink = async (req, res) => {
 
 exports.deleteLink = async (req, res) => {
   try {
-    const link = await Link.findById(req.params.id);
-
+    const link = await Link.findOneAndDelete({permalink: req.params.id});
     if (!link) {
       return res.status(404).json({ message: 'Link not found' });
     }
 
-    await link.remove();
     res.json({ message: 'Link deleted' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
