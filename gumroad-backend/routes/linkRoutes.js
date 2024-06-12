@@ -11,7 +11,7 @@ router.route('/:id/views')
   .put(incrementViews);
 
 router.route('/:id')
-  .get(protect, getLink)
+  .get(getLink)
   .put(protect, updateLink)
   .delete(protect, deleteLink);
 

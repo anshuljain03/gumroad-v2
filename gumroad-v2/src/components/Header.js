@@ -30,14 +30,14 @@ const Header = ({ onLinksPage, useFeedbackHeader, linkDetails }) => {
                         <Link href="/logout" passHref><span>Logout</span></Link>
                     </p>
                 ) : isPermalinkPage && linkDetails? (
-                    <p>{linkDetails.name || ''}</p>
+                    <p>{linkDetails.name || ''}{user && user.name ? ` from ${user.name}`: ''}</p>
                 ) : useFeedbackHeader ? (
                     <p>Thanks for using Gumroad! <a href="mailto:hi@gumroad.com">Feedback?</a></p>
                 ) : (
                     <p>Have an account? <Link href="/login" passHref><span id="login-link" className="underline">Login</span></Link></p>
                 )}
             </div>
-            <div class="rule"></div>
+            <div className="rule"></div>
         </>
     );
 };

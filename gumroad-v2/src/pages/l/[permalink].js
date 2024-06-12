@@ -32,14 +32,11 @@ const LinkPage = () => {
             try {
                 const res = await fetch(`http://localhost:5000/api/links/${permalink}`, {
                     headers: { 
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                        'Content-Type': 'application/json'
                     }
                 });
 
                 const data = await res.json();
-
-                console.log(data)
 
                 if (res.ok) {
                     setLinkDetails(data);
@@ -58,8 +55,7 @@ const LinkPage = () => {
                 await fetch(`http://localhost:5000/api/links/${permalink}/views`, {
                     method: 'PUT',
                     headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                        'Content-Type': 'application/json'
                     }
                 });
             } catch (error) {
@@ -81,8 +77,7 @@ const LinkPage = () => {
             const res = await fetch(`http://localhost:5000/api/purchases/${permalink}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     cardNumber: card_number.value,
@@ -104,11 +99,11 @@ const LinkPage = () => {
     };
 
     return (
-        <Layout linkDetails={linkDetails}>
-            <div id='description-box'>
+        <Layout linkDetails={linkDetails} disableFooter={true}>
+            <div id='description-box' style={{ width: '60%', marginLeft: '20%'}}>
                 <p>{linkDetails.description}</p>
             </div>
-            <div id="large-form">
+            <div id="large-form" style={{ width: '60%', marginLeft: '20%' }}>
                 <form onSubmit={handlePayment}>
                     <div id='link'>
                         {linkDetails.previewUrl && <a href={linkDetails.previewUrl} target="_blank" id='preview_link'>Preview</a>}

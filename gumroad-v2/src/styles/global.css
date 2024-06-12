@@ -226,27 +226,37 @@ h1#logo {
 
 
     .link-form {
-        margin: 20px auto;
-        margin-bottom: 280px;
+        margin-top: 50px;
+        margin-bottom: 180px;
         padding: 20px 0 20px 20px;
         background: #fff;
         border: 1px solid #d4d4d4;
         border-radius: 10px;
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     }
+
+    .link-form p {
+        margin-top: 20px;
+        clear: both;
+    }
     
     .link-form h3 {
-        font-size: 24px;
-        color: #333;
-        margin-bottom: 20px;
+        color: #252a2e;
+        display: inline-block;
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
     
     .link-form label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: #666;
+        padding-top: 9px;
+        float: left;
+        display: inline-block;
+        width: 170px;
+        font-size: 17px;
+        line-height: 24px;
     }
+
     
     #link-options label {
         padding-top: 9px;
@@ -258,19 +268,35 @@ h1#logo {
         font-weight: normal;
     }
     
-    .link-form input[type="text"],
-    .link-form input[type="email"],
-    .link-form textarea {
-        width: 95%;
-        padding: 8px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+    .link-form input {
+        width: 706px;
+        margin-right: 0;
     }
-    
+
+    .link-form input[type="text"] {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 17px;
+        line-height: 17px;
+        border-radius: 4px;
+        background: #f1f1f1;
+        border: 1px solid #ddd;
+        color: #999891;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, .4);
+        padding: 10px;
+        box-shadow: inset 0 1px 0px rgba(0, 0, 0, .02);
+        margin-right: 15px;
+    }
+    .link-form input[type="email"],
     .link-form textarea {
         height: 100px;
         resize: vertical;
+    }
+    
+    .link-form textarea {
+        min-height: 100px;
+        resize: vertical;
+        width: 706px;
+        min-height: 100px;
     }
 
     input[type="text"], input[type="url"] {
@@ -279,13 +305,19 @@ h1#logo {
     
     
     .link-form button {
-        padding: 10px 20px;
-        background-color: #2d90b4;
-        border: none;
+        margin-left: 170px;
+        padding: 11px 15px 12px;
+        color: #fff;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+        font-size: 17px;
+        line-height: 17px;
         border-radius: 4px;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        cursor: pointer !important;
+        text-decoration: none;
+        box-shadow: inset 0 0 2px rgba(255, 255, 255, .2), 0 1px 1px rgba(0, 0, 0, .4);
+        background: -webkit-gradient(linear, left top, left bottom, from(#69c1c5), to(#259397));
+        border: 1px solid #2b8c90;
     }
     
     .link-form button:hover {

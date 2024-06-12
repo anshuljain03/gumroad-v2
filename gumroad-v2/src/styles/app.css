@@ -19,11 +19,18 @@
 
 .app .large-form button, .link .large-form button { margin-left: 170px; padding: 11px 15px 12px; }
 #add-link-button { float: right; margin-bottom:0; line-height: 12px; }
-#delete-link { 
-    float: right; color: #c04355 !important;
-    padding: 10px 20px;
-    background-color: transparent;
 
+#delete-link { 
+    float: right; 
+    margin-left: 720px;
+    color: #c04355 !important;
+    line-height: 1;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: none;
+    background:none;
+    border:none;
+    box-shadow: none;
 }
 .dashboard.links-page h3 { padding-top: 10px; margin-bottom: 5px; }
 
@@ -50,10 +57,10 @@
     display: none;
 }
 
-.large-form .mini-rule, .dashboard .mini-rule { margin-top: 30px; clear: both; }
+#large-form .mini-rule, #dashboard .mini-rule { margin-top: 30px; clear: both; }
 
-.links { padding: 8px 0 0; }
-.links li {
+#links { padding: 8px 0 0; }
+#links li {
     color: #454545;
     margin-top: 12px;
 } 

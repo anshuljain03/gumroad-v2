@@ -8,6 +8,6 @@ router.get('/stats', protect, getPurchaseStats);
 router.get('/history', protect, getPurchaseHistory);
 
 router.route('/:id')
-  .post(protect, purchaseLink);
+  .post(purchaseLink);
 
   module.exports = router;

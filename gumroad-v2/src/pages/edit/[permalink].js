@@ -157,6 +157,7 @@ const EditLinkPage = () => {
                 <form onSubmit={handleSubmit} className="link-form">
                     <h3>Edit Link <button onClick={handleDelete} id="delete-link">Delete Link</button> </h3> 
                     {error && <p className="error">{error}</p>}
+                    <p>
                     <label htmlFor="name">Name:</label>
                     <input
                         id="name"
@@ -166,6 +167,8 @@ const EditLinkPage = () => {
                         onChange={e => setLinkData({ ...linkData, name: e.target.value })}
                         required
                     />
+                    </p>
+                    <p>
                     <label htmlFor="price">Price:</label>
                     <input
                         id="price"
@@ -175,6 +178,8 @@ const EditLinkPage = () => {
                         onChange={e => setLinkData({ ...linkData, price: e.target.value })}
                         required
                     />
+                    </p>
+                    <p>
                     <label htmlFor="url">URL:</label>
                     <input
                         id="url"
@@ -184,6 +189,8 @@ const EditLinkPage = () => {
                         onChange={e => setLinkData({ ...linkData, url: e.target.value })}
                         required
                     />
+                    </p>
+                    <p>
                     <label htmlFor="previewUrl">Preview URL:</label>
                     <input
                         id="previewUrl"
@@ -193,6 +200,8 @@ const EditLinkPage = () => {
                         onChange={e => setLinkData({ ...linkData, previewUrl: e.target.value })}
                         required
                     />
+                    </p>
+                    <p>
                     <label htmlFor="description">Description:</label>
                     <textarea
                         id="description"
@@ -200,7 +209,10 @@ const EditLinkPage = () => {
                         value={linkData.description}
                         onChange={e => setLinkData({ ...linkData, description: e.target.value })}
                     />
+                    </p>
+                    <p>
                     <button type="submit">Save Changes</button>
+                    </p>
                     <div class="mini-rule"></div>
                     <div id="link-options">
                         <h4>Additional link options:</h4>
@@ -217,6 +229,7 @@ const EditLinkPage = () => {
                             />
                         </p>
                     </div>
+                    <div className="rainbow bar"></div>
                 </form>
             </div>
         </Layout>

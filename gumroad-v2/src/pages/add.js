@@ -36,51 +36,61 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
     return (
         <Layout useFeedbackHeader={false}>
             <form onSubmit={handleSubmit} className="link-form">
-                <h3>{'Create'} Link</h3>
-                <label htmlFor="name">Name:</label>
-                <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder='name'
-                    value={linkData.name}
-                    onChange={e => setLinkData({...linkData, name: e.target.value})}
-                    required
-                />
-
-                <label htmlFor="price">Price:</label>
-                <input
-                    id="price"
-                    name="price"
-                    type="text"
-                    placeholder='10'
-                    value={linkData.price}
-                    onChange={e => setLinkData({...linkData, price: e.target.value})}
-                    required
-                />
-
+                <h3>Create a new link</h3>
+                <p>
+                    <label htmlFor="name">Name:</label>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder='name'
+                        value={linkData.name}
+                        onChange={e => setLinkData({...linkData, name: e.target.value})}
+                        required
+                    />
+                </p>
+                <p>
+                    <label htmlFor="price">Price:</label>
+                    <input
+                        id="price"
+                        name="price"
+                        type="text"
+                        placeholder='10'
+                        value={linkData.price}
+                        onChange={e => setLinkData({...linkData, price: e.target.value})}
+                        required
+                    />
+                </p>
+                <p>
                 <label htmlFor="url">URL:</label>
-                <input
-                    id="url"
-                    name="url"
-                    type="text"
-                    placeholder='https://'
-                    value={linkData.url}
-                    onChange={e => setLinkData({...linkData, url: e.target.value})}
-                    required
-                />
+                    <input
+                        id="url"
+                        name="url"
+                        type="text"
+                        placeholder='https://'
+                        value={linkData.url}
+                        onChange={e => setLinkData({...linkData, url: e.target.value})}
+                        required
+                    />
+                </p>
 
-                <label htmlFor="previewUrl">Preview URL:</label>
-                <input
-                    id="previewUrl"
-                    name="previewUrl"
-                    type="text"
-                    placeholder='https://'
-                    value={linkData.previewUrl}
-                    onChange={e => setLinkData({...linkData, previewUrl: e.target.value})}
-                    required
-                />
-                <label htmlFor="description">Description:</label>
+                <p>
+                    <label htmlFor="previewUrl">Preview URL:</label>
+                    <input
+                        id="previewUrl"
+                        name="previewUrl"
+                        type="text"
+                        placeholder='https://'
+                        value={linkData.previewUrl}
+                        onChange={e => setLinkData({...linkData, previewUrl: e.target.value})}
+                        required
+                    />
+                </p>
+                <p>
+                <label htmlFor="description">
+                Description:<br />
+                <span className="faint">(optional)</span>
+                </label>
                 <textarea
                     id="description"
                     name="description"
@@ -88,8 +98,11 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
                     value={linkData.description}
                     onChange={e => setLinkData({...linkData, description: e.target.value})}
                 />
-
-                <button type="submit">{'Add Link'}</button>
+                </p>
+                <p>
+                    <button type="submit">{'Add Link'}</button>
+                </p>
+                <div className="rainbow bar"></div>
             </form>
         </Layout>
     );

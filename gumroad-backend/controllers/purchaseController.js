@@ -14,16 +14,16 @@ exports.purchaseLink = async (req, res) => {
       return res.status(404).json({ error: 'Link not found' });
     }
 
-    link.number_of_views += 1;
     await link.save();
 
     if (link.number_of_downloads >= link.download_limit && link.download_limit > 0) {
       return res.status(400).json({ error: 'Download limit reached' });
     }
 
+    const user = await User.findOne({email: link.owner});
     if (cardNumber === '4242424242424242') {
       // Simulate successful payment
-      await simulatePayment(link, req.user);
+      await simulatePayment(link, user);
       return res.json({ message: 'Payment successful', redirectUrl: link.url });
     }
 
@@ -51,7 +51,6 @@ exports.purchaseLink = async (req, res) => {
 async function simulatePayment(link, user) {
   link.numberOfDownloads += 1;
   link.numberOfPaidDownloads += 1;
-  link.numberOfViews += 1;
   link.balance += link.price;
   link.save();
 
