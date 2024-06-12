@@ -56,7 +56,7 @@ const SettingsPage = () => {
     };
 
     return (
-        <Layout>
+        <Layout useFeedbackHeader={false}>
             <form onSubmit={handleSubmit} id="large-form">
                 <h3>Your account settings <small>a setting you can't change: how awesome you are</small></h3>
                 <p>

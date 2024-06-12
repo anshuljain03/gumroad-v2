@@ -11,7 +11,7 @@ const Layout = ({ children, title, onLinksPage = false, useFeedbackHeader=true, 
                     <MyHead title={title} />
                     <Header onLinksPage={onLinksPage} useFeedbackHeader={useFeedbackHeader} linkDetails={linkDetails}/>
                     {children}
-            </div>
+                </div>
             <Footer />
         </>
     );

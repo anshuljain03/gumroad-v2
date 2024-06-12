@@ -37,7 +37,7 @@ const Header = ({ onLinksPage, useFeedbackHeader, linkDetails }) => {
                     <p>Have an account? <Link href="/login" passHref><span id="login-link" className="underline">Login</span></Link></p>
                 )}
             </div>
-
+            <div class="rule"></div>
         </>
     );
 };

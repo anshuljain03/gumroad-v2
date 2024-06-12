@@ -5,6 +5,7 @@ const MyHead = ({ title }) => {
   return (
     <>
       <Head>
+        <link rel="icon" href='/favicon.ico' type='image' />
         <title>{title || 'Gumroad - Selling should be as easy as sharing a link.'}</title>
         <meta property="og:site_name" content="Gumroad" />
         <meta property="og:title" content="Gumroad" />

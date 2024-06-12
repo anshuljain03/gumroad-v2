@@ -127,25 +127,30 @@ const EditLinkPage = () => {
             <div id='share-box'>
                 <button onClick={() => handleShare('facebook')} id="facebook-button">Share on Facebook</button>
                 <p>
-                <input
-                    type="text"
-                    value={`http://localhost:3000/l/${permalink}`}
-                    id="link_to_share"
-                    readOnly
-                    title="Share this link to sell!"
-                    onClick={(e) => e.target.select()}  // Automatically selects the content on click
-                />
+                    <input
+                        type="text"
+                        value={`http://localhost:3000/l/${permalink}`}
+                        id="link_to_share"
+                        readOnly
+                        title="Share this link to sell!"
+                        onClick={(e) => e.target.select()}  // Automatically selects the content on click
+                    />
                 </p>
                 <button onClick={() => handleShare('twitter')} id="twitter-button">Share on X</button>
                 <div id="analytics-box">
-                        <div id='conversion-chart'>
-                        <p><strong>{linkData.views}</strong> views <span className="arrow">→</span></p>
-                        <PieChart conversionRate={linkData.conversion} />
-                        <span>{linkData.conversion}%</span> <span className="arrow">→</span> 
-                        <strong>{linkData.downloads}</strong> downloads at &#8776; 
-                        <strong>${linkData.price}</strong> <span className="arrow">→</span> 
-                        <strong>${linkData.profit}</strong> in profit!
-                        </div>
+                <div id='conversion-chart' style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span><strong>{linkData.views}</strong> views</span>
+                <span className="arrow">→</span>
+                <div>
+                    <PieChart conversionRate={linkData.conversion} />
+                </div>
+                <span><strong>{linkData.conversion}%</strong></span>
+                <span className="arrow">→</span>
+                <span><strong>{linkData.downloads}</strong> downloads at &#8776;</span>
+                <span><strong>${linkData.price}</strong></span>
+                <span className="arrow">→</span>
+                <span><strong>${linkData.profit}</strong> in profit!</span>
+        </div>
                 </div>
             </div>
             <div id="edit-link-page">
@@ -196,6 +201,22 @@ const EditLinkPage = () => {
                         onChange={e => setLinkData({ ...linkData, description: e.target.value })}
                     />
                     <button type="submit">Save Changes</button>
+                    <div class="mini-rule"></div>
+                    <div id="link-options">
+                        <h4>Additional link options:</h4>
+                        <p>
+                            <label htmlFor="download_limit">Download limit:</label>
+                            <input
+                                id="download_limit"
+                                name="download_limit"
+                                type="text"
+                                placeholder="0"
+                                value={linkData.downloadLimit}
+                                onChange={e => setLinkData({ ...linkData, downloadLimit: e.target.value })}
+                                title="The number of people that can purchase this item. 0 means no limit!"
+                            />
+                        </p>
+                    </div>
                 </form>
             </div>
         </Layout>
