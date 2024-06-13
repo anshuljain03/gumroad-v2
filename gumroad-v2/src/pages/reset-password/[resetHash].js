@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../../components/Layout'; 
-import { BACKEND_URL } from '../../config'; // Adjust the path as per your project structure
+const BACKEND_URL=process.env.BACKEND_URL
 
 const ResetPassword = () => {
     const router = useRouter();

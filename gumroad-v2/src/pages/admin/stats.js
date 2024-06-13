@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import { BACKEND_URL } from '../../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 const StatsPage = () => {
     const [stats, setStats] = useState({
