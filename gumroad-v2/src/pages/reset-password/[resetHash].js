@@ -14,7 +14,6 @@ const ResetPassword = () => {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {
-            console.log('in here');
             const response = await fetch(`${BACKEND_URL}/api/users/password-reset/${resetHash}`, {
                 method: 'POST',
                 headers: {
@@ -24,7 +23,6 @@ const ResetPassword = () => {
             });
             const data = await response.json();
 
-            console.log(data);
             if (response.ok) {
                 setSuccess(data.message);
                 localStorage.setItem('token', data.token);

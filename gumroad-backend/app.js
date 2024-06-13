@@ -21,8 +21,8 @@ mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+.then(() => console.info('MongoDB Connected'))
+.catch(err => console.info(err));
 
 app.use('/api/users', userRoutes);
 app.use('/api/links', linkRoutes);
@@ -31,4 +31,4 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/file', fileRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.info(`Server running on port ${PORT}`));

@@ -18,7 +18,7 @@ async function createContainerIfNotExists() {
     const exists = await containerClient.exists();
     if (!exists) {
         await containerClient.create();
-        console.log(`Container '${containerName}' created`);
+        console.info(`Container '${containerName}' created`);
     }
 }
 
