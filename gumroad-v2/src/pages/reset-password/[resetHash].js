@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../components/Layout'; // Import your layout
+import Layout from '../../components/Layout'; 
+import { BACKEND_URL } from '../../config'; // Adjust the path as per your project structure
 
 const ResetPassword = () => {
     const router = useRouter();
@@ -13,7 +14,7 @@ const ResetPassword = () => {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:5000/api/users/password-reset/${resetHash}`, {
+            const response = await fetch(`${BACKEND_URL}/api/users/password-reset/${resetHash}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -12,6 +12,8 @@ import {
   Legend,
 } from 'chart.js';
 
+import { BACKEND_URL } from '../config';
+
 // Register the required components for Chart.js
 ChartJS.register(
   CategoryScale,
@@ -36,7 +38,7 @@ const HomePage = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/purchases/stats', {
+                const res = await fetch(`${BACKEND_URL}/api/purchases/stats`, {
                     headers: { 
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json'
@@ -60,7 +62,7 @@ const HomePage = () => {
 
         const fetchDailyData = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/purchases/history', {
+                const res = await fetch(`${BACKEND_URL}/api/purchases/history`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                         'Content-Type': 'application/json'

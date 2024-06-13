@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
 const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
+const { FRONTEND_URL } = require('../config');
 
 exports.registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
@@ -65,7 +66,7 @@ exports.forgotPassword = async (req, res) => {
     await user.save({ validateBeforeSave: false });
 
     // Create reset URL to be sent to the user
-    const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
+    const resetUrl = `${FRONTEND_URL}/reset-password/${resetToken}`;
 
     const message = `You recently requested to reset your password. Please go to the following link to reset your password: \n\n ${resetUrl}`;
 

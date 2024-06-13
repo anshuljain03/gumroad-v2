@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout'; // Ensure this path is correct based on your directory structure
+import { BACKEND_URL } from '../config';
 
 const SettingsPage = () => {
     const [formData, setFormData] = useState({
@@ -11,7 +12,7 @@ const SettingsPage = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/users/', {
+                const response = await fetch(`${BACKEND_URL}/api/users/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ const SettingsPage = () => {
         event.preventDefault();
 
         // make api call to update user details
-        const response = await fetch('http://localhost:5000/api/users/', {
+        const response = await fetch(`${BACKEND_URL}/api/users/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

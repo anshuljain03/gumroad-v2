@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BACKEND_URL } from '../config';
 
 const useAuth = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,7 +11,7 @@ const useAuth = () => {
             const token = localStorage.getItem('token');
             if (token) {
                 try {
-                    const response = await fetch('http://localhost:5000/api/users', {
+                    const response = await fetch(`${BACKEND_URL}/api/users`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`,

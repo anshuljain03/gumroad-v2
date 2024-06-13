@@ -30,7 +30,7 @@ const LinkPage = () => {
         const fetchLinkDetails = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:5000/api/links/${permalink}`, {
+                const res = await fetch(`${BACKEND_URL}/api/links/${permalink}`, {
                     headers: { 
                         'Content-Type': 'application/json'
                     }
@@ -40,7 +40,7 @@ const LinkPage = () => {
 
                 if(data.previewUrl && !data.previewUrl.startsWith('http')) {
                     // fetch temporary signed URL
-                    const res = await fetch(`http://localhost:5000/api/file/${data.previewUrl}`, {
+                    const res = await fetch(`${BACKEND_URL}/api/file/${data.previewUrl}`, {
                         type: 'GET',
                         headers: { 
                             'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ const LinkPage = () => {
 
         const incrementViews = async () => {
             try {
-                await fetch(`http://localhost:5000/api/links/${permalink}/views`, {
+                await fetch(`${BACKEND_URL}/api/links/${permalink}/views`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -86,7 +86,7 @@ const LinkPage = () => {
         setError('');
 
         try {
-            const res = await fetch(`http://localhost:5000/api/purchases/${permalink}`, {
+            const res = await fetch(`${BACKEND_URL}/api/purchases/${permalink}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

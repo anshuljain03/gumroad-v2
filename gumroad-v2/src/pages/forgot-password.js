@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { BACKEND_URL } from '../config';
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +14,7 @@ const ForgotPasswordPage = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/api/users/forgot-password', {
+            const response = await fetch(`${BACKEND_URL}/api/users/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

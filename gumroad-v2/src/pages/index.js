@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import useAuth from '../hooks/useAuth';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
+import { BACKEND_URL } from '../config';
 
 const HomePage = () => {
     const [email, setEmail] = useState('');

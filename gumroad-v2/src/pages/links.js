@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { BACKEND_URL } from '../config';
 
 const LinksPage = () => {
     const [links, setLinks] = useState([]);
@@ -14,7 +15,7 @@ const LinksPage = () => {
         const fetchLinks = async () => {
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:5000/api/links/', {
+                const response = await fetch(`${BACKEND_URL}/api/links/`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }

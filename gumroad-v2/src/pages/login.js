@@ -3,8 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000';
+import { BACKEND_URL } from '../config';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');

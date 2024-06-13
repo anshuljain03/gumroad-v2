@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
+import { BACKEND_URL } from '../../config';
 
 const StatsPage = () => {
     const [stats, setStats] = useState({
@@ -17,7 +18,7 @@ const StatsPage = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/admin/stats', {
+        fetch(`${BACKEND_URL}/api/admin/stats`, {
             headers: { 
                 'Content-Type': 'application/json'
             }

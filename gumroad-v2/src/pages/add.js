@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
+import { BACKEND_URL } from '../config';
 
 const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
     const [linkData, setLinkData] = useState({
@@ -16,7 +17,7 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const method = edit ? 'PUT' : 'POST';
-        const url = `http://localhost:5000/api/links${edit ? `/${initialLinkData.id}` : '/'}`;
+        const url = `${BACKEND_URL}/api/links${edit ? `/${initialLinkData.id}` : '/'}`;
         try {
             const response = await fetch(url, {
                 method,
@@ -39,7 +40,7 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost:5000/api/file/', {
+            const response = await fetch(`${BACKEND_URL}/api/file/`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`

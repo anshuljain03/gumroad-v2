@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Layout from '../../components/Layout';
 import PieChart from '../../components/PieChart';
 import { useRouter } from 'next/router';
+import { BACKEND_URL, FRONTEND_URL } from '../../config';
 
 
 const EditLinkPage = () => {
@@ -30,7 +31,7 @@ const EditLinkPage = () => {
         const fetchLinkData = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:5000/api/links/${permalink}`, {
+                const res = await fetch(`${BACKEND_URL}/api/links/${permalink}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -50,7 +51,7 @@ const EditLinkPage = () => {
                         conversion: (data.numberOfPaidDownloads/data.numberOfViews)*100 || 0,
                         profit: data.balance || 0.00
                     });
-                    setLinkToShare(`http://localhost:3000/links/${permalink}`); // Assuming you want to show a clickable link
+                    setLinkToShare(`${FRONTEND_URL}/links/${permalink}`); // Assuming you want to show a clickable link
                 } else {
                     throw new Error(data.message || 'Failed to fetch link data');
                 }
@@ -69,7 +70,7 @@ const EditLinkPage = () => {
         setLoading(true);
 
         try {
-            const res = await fetch(`http://localhost:5000/api/links/${permalink}`, {
+            const res = await fetch(`${BACKEND_URL}/api/links/${permalink}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -91,7 +92,7 @@ const EditLinkPage = () => {
         if (!confirm) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/api/links/${permalink}`, {
+            const res = await fetch(`${BACKEND_URL}/api/links/${permalink}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -129,11 +130,11 @@ const EditLinkPage = () => {
                 <p>
                     <input
                         type="text"
-                        value={`http://localhost:3000/l/${permalink}`}
+                        value={`${FRONTEND_URL}/l/${permalink}`}
                         id="link_to_share"
                         readOnly
                         title="Share this link to sell!"
-                        onClick={(e) => e.target.select()}  // Automatically selects the content on click
+                        onClick={(e) => e.target.select()} 
                     />
                 </p>
                 <button onClick={() => handleShare('twitter')} id="twitter-button">Share on X</button>
