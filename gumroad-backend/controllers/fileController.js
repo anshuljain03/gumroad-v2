@@ -83,12 +83,38 @@ const getFileUrl = async (req, res) => {
         res.status(200).send({ url });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Failed to generate SAS URL', error: error.message });
+        res.status(500).json({ message: 'Failed to generate Signed URL', error: error.message });
+    }
+};
+
+const fetchFile = async (req, res) => {
+    const { blobName } = req.params;
+
+    try {
+        const file = await File.findOne({ uniquePermalink: blobName });
+        if (!file) {
+            return res.status(404).send({ message: 'File not found' });
+        }
+
+        // Retrieve the container client
+        const containerClient = blobServiceClient.getContainerClient("uploads");
+        const blobClient = containerClient.getBlobClient(blobName);
+        const downloadBlockBlobResponse = await blobClient.download();
+
+        res.setHeader('Content-Type', file.fileType);
+        res.setHeader('Content-Disposition', `attachment; filename="${file.fileName}"`);
+        
+        // Stream the blob to the response
+        downloadBlockBlobResponse.readableStreamBody.pipe(res);
+    } catch (error) {
+        console.error('Error retrieving file:', error);
+        res.status(500).json({ message: 'Failed to retrieve file', error: error.message });
     }
 };
 
 module.exports = {
     uploadFile,
     uploadStrategy,
-    getFileUrl
+    getFileUrl,
+    fetchFile
 };

@@ -41,15 +41,14 @@ const LinkPage = () => {
 
                 if(data.previewUrl && !data.previewUrl.startsWith('http')) {
                     // fetch temporary signed URL
-                    const res = await fetch(`${BACKEND_URL}/api/file/${data.previewUrl}`, {
+                    const res = await fetch(`${BACKEND_URL}/api/file/${data.previewUrl}/url`, {
                         type: 'GET',
                         headers: { 
                             'Content-Type': 'application/json'
                         }
                     });
                     if(res.ok) {
-                        const urlData = await res.json();
-                        data.previewUrl = urlData.url;
+                        data.previewUrl = `${BACKEND_URL}/api/file/${data.previewUrl}`
                     } else {
                         // append https:// to the url
                         data.previewUrl = `https://${data.previewUrl}`;
@@ -110,15 +109,14 @@ const LinkPage = () => {
             alert('Payment Successful!');
 
             if(data.redirectUrl && !data.redirectUrl.startsWith('http')) {
-                const res = await fetch(`${BACKEND_URL}/api/file/${data.redirectUrl}`, {
+                const res = await fetch(`${BACKEND_URL}/api/file/${data.redirectUrl}/url`, {
                     type: 'GET',
                     headers: { 
                         'Content-Type': 'application/json'
                     }
                 });
                 if(res.ok) {
-                    const urlData = await res.json();
-                    data.redirectUrl = urlData.url;
+                    data.redirectUrl = `${BACKEND_URL}/api/file/${data.redirectUrl}`
                 } else {
                     data.redirectUrl = `https://${data.redirectUrl}`;
                 }
