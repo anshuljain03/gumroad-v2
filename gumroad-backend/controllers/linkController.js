@@ -13,8 +13,7 @@ exports.getLinks = async (req, res) => {
 exports.getLink = async (req, res) => {
   try {
     const link = await Link.find({permalink: req.params.id});
-
-    if (!link) {
+    if (!link || link.length === 0) {
       return res.status(404).json({ message: 'Link not found' });
     }
 

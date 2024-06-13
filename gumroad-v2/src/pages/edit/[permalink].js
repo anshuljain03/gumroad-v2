@@ -50,12 +50,13 @@ const EditLinkPage = () => {
                         downloadLimit: data.downloadLimit,
                         views: data.numberOfViews || 0,
                         downloads: data.numberOfPaidDownloads || 0,
-                        conversion: ((data.numberOfPaidDownloads/data.numberOfViews)*100).toFixed(2) || 0,
+                        conversion: ((data.numberOfPaidDownloads/data.numberOfViews)*100 || 0).toFixed(2),
                         profit: data.balance || 0.00
                     });
                     setLinkToShare(`${FRONTEND_URL}/links/${permalink}`); // Assuming you want to show a clickable link
                 } else {
-                    throw new Error(data.message || 'Failed to fetch link data');
+                    alert('Failed to fetch link data');
+                    router.push('/links');
                 }
             } catch (error) {
                 setError(error.message);
@@ -81,7 +82,8 @@ const EditLinkPage = () => {
                 body: JSON.stringify(linkData)
             });
             if (!res.ok) throw new Error('Failed to update link');
-            location.reload(); // Reload the page to show the updated data
+            
+            location.reload();
         } catch (error) {
             setError(error.message);
         } finally {
@@ -125,7 +127,7 @@ const EditLinkPage = () => {
     return (
         <Layout useFeedbackHeader={false}>
             <Head>
-                <title>Gumroad - {linkData.name}</title>
+                <title>Gumroad - {linkData.name || ''}</title>
             </Head>
             <div id='share-box'>
                 <button onClick={() => handleShare('facebook')} id="facebook-button">Share on Facebook</button>
