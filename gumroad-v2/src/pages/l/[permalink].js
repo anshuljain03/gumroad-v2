@@ -47,8 +47,13 @@ const LinkPage = () => {
                             'Content-Type': 'application/json'
                         }
                     });
-                    const urlData = await res.json();
-                    data.previewUrl = urlData.url;
+                    if(res.ok) {
+                        const urlData = await res.json();
+                        data.previewUrl = urlData.url;
+                    } else {
+                        // append https:// to the url
+                        data.previewUrl = `https://${data.previewUrl}`;
+                    }
                 }
 
                 if (res.ok) {
@@ -103,6 +108,22 @@ const LinkPage = () => {
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || 'Payment processing failed');
             alert('Payment Successful!');
+
+            if(data.redirectUrl && !data.redirectUrl.startsWith('http')) {
+                const res = await fetch(`${BACKEND_URL}/api/file/${data.redirectUrl}`, {
+                    type: 'GET',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if(res.ok) {
+                    const urlData = await res.json();
+                    data.redirectUrl = urlData.url;
+                } else {
+                    data.redirectUrl = `https://${data.redirectUrl}`;
+                }
+            }
+
             window.location.href = data.redirectUrl || 'https://google.com';
         } catch (error) {
             setError(error.message);

@@ -73,6 +73,12 @@ const getSasUrl = async (blobName) => {
 const getFileUrl = async (req, res) => {
     const blobName = req.params.blobName;
     try {
+        const file = await File.findOne({ uniquePermalink: blobName });
+        if (!file) {
+            res.status(404).json({ message: 'File not found' });
+            return;
+        }
+
         const url = await getSasUrl(blobName);
         res.status(200).send({ url });
     } catch (error) {
