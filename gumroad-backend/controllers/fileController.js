@@ -43,7 +43,7 @@ const uploadFile = async (req, res) => {
         // Save file metadata in MongoDB
         await newFile.save();
 
-        console.log(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);
+        console.info(`Upload block blob ${blobName} successfully`, uploadBlobResponse.requestId);
         res.status(200).send({
             message: "File uploaded to Azure Blob Storage and metadata saved to MongoDB.",
             blobName: blobName,

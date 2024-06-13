@@ -38,6 +38,18 @@ const LinkPage = () => {
 
                 const data = await res.json();
 
+                if(data.previewUrl && !data.previewUrl.startsWith('http')) {
+                    // fetch temporary signed URL
+                    const res = await fetch(`http://localhost:5000/api/file/${data.previewUrl}`, {
+                        type: 'GET',
+                        headers: { 
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const urlData = await res.json();
+                    data.previewUrl = urlData.url;
+                }
+
                 if (res.ok) {
                     setLinkDetails(data);
                 } else {

@@ -51,7 +51,6 @@ exports.adminStats = async (req, res) => {
 
         const lastLink = await Link.findOne().sort({ createDate: -1 });
         const lastPurchase = await Purchase.findOne().sort({ createDate: -1 });
-        console.log('lastLink', lastLink, 'lastPurchase', lastPurchase);
         const stats = {
             numberOfLinks,
             numberOfUsers,

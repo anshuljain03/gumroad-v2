@@ -33,9 +33,37 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
         }
     };
 
+    const handleFileChange = async (event, field) => {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/file/', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setLinkData(prev => ({
+                    ...prev,
+                    [field]: data.blobName // Assuming the backend returns the path of the uploaded file
+                }));
+            } else {
+                throw new Error(data.message || 'File upload failed');
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+    };
+
     return (
         <Layout useFeedbackHeader={false}>
-            <form onSubmit={handleSubmit} className="link-form">
+            <form onSubmit={handleSubmit} className="link-form" style={{ marginLeft: 'auto' }}>
                 <h3>Create a new link</h3>
                 <p>
                     <label htmlFor="name">Name:</label>
@@ -62,15 +90,20 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
                     />
                 </p>
                 <p>
-                <label htmlFor="url">URL:</label>
+                    <label htmlFor="url">URL:</label>
                     <input
                         id="url"
                         name="url"
                         type="text"
-                        placeholder='https://'
+                        placeholder='https:// or upload a file'
                         value={linkData.url}
                         onChange={e => setLinkData({...linkData, url: e.target.value})}
-                        required
+                        required={!linkData.file} // Require if no file is uploaded
+                    />
+                    <input
+                        type="file"
+                        style={{ marginLeft: '75%', paddingTop: '10px'}}
+                        onChange={(e) => handleFileChange(e, 'url')}
                     />
                 </p>
 
@@ -80,10 +113,15 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
                         id="previewUrl"
                         name="previewUrl"
                         type="text"
-                        placeholder='https://'
+                        placeholder='https:// or upload a file'
                         value={linkData.previewUrl}
                         onChange={e => setLinkData({...linkData, previewUrl: e.target.value})}
-                        required
+                        required={!linkData.file} // Require if no file is uploaded
+                    />
+                    <input
+                        type="file"
+                        style={{ marginLeft: '75%', paddingTop: '10px'}}
+                        onChange={(e) => handleFileChange(e, 'previewUrl')}
                     />
                 </p>
                 <p>

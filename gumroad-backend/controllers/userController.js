@@ -119,9 +119,7 @@ exports.getUser = async (req, res) => {
     }
 };
 
-
 exports.resetPassword = async (req, res) => {
-    console.log(req.params.resetToken);
     const resetToken = crypto.createHash('sha256').update(req.params.resetToken).digest('hex');
     const user = await User.findOne({
         resetPasswordToken: resetToken,
@@ -139,7 +137,7 @@ exports.resetPassword = async (req, res) => {
     await user.save();
     
     const token = generateToken(user._id);
-    
+
     res.status(200).json({ success: true, token });
 };
 
