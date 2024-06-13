@@ -50,7 +50,7 @@ const EditLinkPage = () => {
                         downloadLimit: data.downloadLimit,
                         views: data.numberOfViews || 0,
                         downloads: data.numberOfPaidDownloads || 0,
-                        conversion: (data.numberOfPaidDownloads/data.numberOfViews)*100 || 0,
+                        conversion: ((data.numberOfPaidDownloads/data.numberOfViews)*100).toFixed(2) || 0,
                         profit: data.balance || 0.00
                     });
                     setLinkToShare(`${FRONTEND_URL}/links/${permalink}`); // Assuming you want to show a clickable link
@@ -216,7 +216,7 @@ const EditLinkPage = () => {
                     <p>
                     <button type="submit">Save Changes</button>
                     </p>
-                    <div class="mini-rule"></div>
+                    <div className="mini-rule"></div>
                     <div id="link-options">
                         <h4>Additional link options:</h4>
                         <p>

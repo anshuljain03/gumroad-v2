@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
+import { set } from 'mongoose';
 const BACKEND_URL=process.env.BACKEND_URL
 
 const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
@@ -12,12 +13,16 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
         previewUrl: '',
         description: ''
     });
+
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const router = useRouter();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const method = edit ? 'PUT' : 'POST';
-        const url = `${BACKEND_URL}/api/links${edit ? `/${initialLinkData.id}` : '/'}`;
+        const method = 'POST';
+        const url = `${BACKEND_URL}/api/links`;
         try {
             const response = await fetch(url, {
                 method,
@@ -30,7 +35,8 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
             if (!response.ok) throw new Error('Network response was not ok.');
             router.push('/links'); // Redirect after submit
         } catch (error) {
-            console.error('Failed to submit the form:', error);
+            setShowError(true);
+            setError(error.message || 'An error occurred while creating link');
         }
     };
 
@@ -58,7 +64,8 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
                 throw new Error(data.message || 'File upload failed');
             }
         } catch (error) {
-            console.error('Error uploading file:', error);
+            setShowError(true);
+            setErrorMessage(error.message || 'An error occurred while uploading file');
         }
     };
 
@@ -83,7 +90,7 @@ const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
                     <input
                         id="price"
                         name="price"
-                        type="text"
+                        type="number"
                         placeholder='10'
                         value={linkData.price}
                         onChange={e => setLinkData({...linkData, price: e.target.value})}
