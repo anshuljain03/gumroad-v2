@@ -3,7 +3,7 @@ import Layout from '../components/Layout';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { BACKEND_URL } from '../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');

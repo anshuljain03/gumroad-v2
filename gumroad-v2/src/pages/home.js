@@ -12,7 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 
-import { BACKEND_URL } from '../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 // Register the required components for Chart.js
 ChartJS.register(

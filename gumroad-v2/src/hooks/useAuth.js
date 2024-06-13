@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BACKEND_URL } from '../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 const useAuth = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);

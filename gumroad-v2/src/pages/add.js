@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
-import { BACKEND_URL } from '../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 const LinkForm = ({ edit = false, linkData: initialLinkData }) => {
     const [linkData, setLinkData] = useState({

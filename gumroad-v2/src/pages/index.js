@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { useRouter } from 'next/router';
 import useAuth from '../hooks/useAuth';
-import { BACKEND_URL } from '../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 const HomePage = () => {
     const [email, setEmail] = useState('');

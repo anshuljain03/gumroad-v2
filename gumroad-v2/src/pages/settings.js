@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout'; // Ensure this path is correct based on your directory structure
-import { BACKEND_URL } from '../config';
+const BACKEND_URL=process.env.BACKEND_URL
 
 const SettingsPage = () => {
     const [formData, setFormData] = useState({

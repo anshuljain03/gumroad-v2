@@ -3,7 +3,9 @@ import Head from 'next/head';
 import Layout from '../../components/Layout';
 import PieChart from '../../components/PieChart';
 import { useRouter } from 'next/router';
-import { BACKEND_URL, FRONTEND_URL } from '../../config';
+
+const BACKEND_URL=process.env.BACKEND_URL
+const FRONTEND_URL=process.env.FRONTEND_URL
 
 
 const EditLinkPage = () => {
