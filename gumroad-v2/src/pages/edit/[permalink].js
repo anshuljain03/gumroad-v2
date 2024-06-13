@@ -114,7 +114,7 @@ const EditLinkPage = () => {
     };
 
     const handleShare = (platform) => {
-        const shareUrl = `http://www.example.com/link/${permalink}`;
+        const shareUrl = `${FRONTEND_URL}/l/${permalink}`;
         const message = encodeURIComponent(`Check out this link: ${shareUrl}`);
         const twitterUrl = `https://twitter.com/intent/tweet?text=${message}`;
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;

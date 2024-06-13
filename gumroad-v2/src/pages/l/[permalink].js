@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { useRouter } from 'next/router';
+const BACKEND_URL = process.env.BACKEND_URL;
 
 const LinkPage = () => {
     const router = useRouter();
