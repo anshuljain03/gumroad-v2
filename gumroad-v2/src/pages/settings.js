@@ -54,6 +54,9 @@ const SettingsPage = () => {
         });
 
         localStorage.setItem('users', JSON.stringify(response));
+
+        // display as message saying details updated
+        alert('Details updated successfully');
     };
 
     return (

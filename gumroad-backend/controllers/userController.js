@@ -84,7 +84,7 @@ exports.forgotPassword = async (req, res) => {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpire = undefined;
         await user.save({ validateBeforeSave: false });
-
+        console.log(error);
         res.status(500).json({ message: 'Email could not be sent', error: error.message });
     }
 };
@@ -132,7 +132,9 @@ exports.resetPassword = async (req, res) => {
     }
 
     // Set new password
-    user.password = req.body.password;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    user.password = hashedPassword
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();

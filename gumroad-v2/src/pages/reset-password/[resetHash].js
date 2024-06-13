@@ -14,6 +14,7 @@ const ResetPassword = () => {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {
+            console.log('in here');
             const response = await fetch(`${BACKEND_URL}/api/users/password-reset/${resetHash}`, {
                 method: 'POST',
                 headers: {
@@ -22,10 +23,12 @@ const ResetPassword = () => {
                 body: JSON.stringify({ email, password })
             });
             const data = await response.json();
+
+            console.log(data);
             if (response.ok) {
                 setSuccess(data.message);
                 localStorage.setItem('token', data.token);
-                router.push('/');
+                router.push('/home');
             } else {
                 throw new Error(data.message);
             }
@@ -47,6 +50,7 @@ const ResetPassword = () => {
                     <input
                         type="text"
                         placeholder="Email Address"
+                        name='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required

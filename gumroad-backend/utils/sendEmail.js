@@ -1,17 +1,17 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
+    host: 'smtp-relay.brevo.com',
     port: 587,
     auth: {
-        user: 'tristin.ebert79@ethereal.email',
-        pass: 'nSEK7MAddVrjhQxuH5'
+        user: '76a01b002@smtp-brevo.com',
+        pass: process.env.EMAIL_PASSWORD
     }
 });
 
 const sendEmail = async (options) => {
     const mailOptions = {
-        from: 'tristin.ebert79@ethereal.email', // sender address
+        from: 'anshuljain3141@gmail.com', // sender address
         to: options.email, // list of receivers
         subject: options.subject, // Subject line
         text: options.message, // plain text body
