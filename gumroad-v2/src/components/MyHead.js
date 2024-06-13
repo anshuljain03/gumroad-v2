@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Script from 'next/script';
 
 const MyHead = ({ title }) => {
   return (
@@ -15,7 +14,6 @@ const MyHead = ({ title }) => {
         <meta property="fb:page_id" content="http://www.facebook.com/gumroad" />
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
       </Head>
-      <Script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" strategy="beforeInteractive"/>
     </>
   );
 };
